@@ -7,7 +7,7 @@ steps:
 
 # This step builds the container image.
 
-- name: gcr.io/cloud-builders/docker
+- name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
   - '-t'
@@ -30,8 +30,8 @@ steps:
   args:
   - '-c'
   - |
-     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" resources/anil-python-workload.yaml | \
-     sed "s/latest/${SHORT_SHA}/g" > resources/anil-python-workload.yaml
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" resources/deployment.yaml | \
+     sed "s/latest/${SHORT_SHA}/g" > resources/deployment.yaml
 
 
 # This step deploys the new version of our container image
