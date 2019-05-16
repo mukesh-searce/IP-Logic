@@ -1,7 +1,6 @@
-FROM python:3.6-jessie
-RUN apt update
+FROM python:alpine3.7
+COPY . /app
 WORKDIR /app
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
-ADD . /app
-CMD ["python", "app.py"]
+RUN pip install -r requirements.txt
+EXPOSE 5000
+CMD python ./app.py
