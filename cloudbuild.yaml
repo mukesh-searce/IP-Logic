@@ -30,15 +30,15 @@ steps:
   args:
   - '-c'
   - |
-     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" deployment.yaml | \
-     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > deployment.yaml
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" IP-Logic/deployment.yaml | \
+     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > IP-Logic/deployment.yaml
 
 
 # This step deploys the new version of our container image
 # in the Kubernetes Engine cluster.
 - name: 'gcr.io/cloud-builders/kubectl'
   id: Deploy
-  args: ['apply' , '-f' , 'deployment.yaml']
+  args: ['apply' , '-f' , 'IP-Logic/deployment.yaml']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=northamerica-northeast1-a'
   - 'CLOUDSDK_CONTAINER_CLUSTER=harshal-test'
