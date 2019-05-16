@@ -9,8 +9,8 @@ spec:
   replicas: 1
   template:
     metadata:
-      labels:
-          app: anil-python
+    labels:
+      app: anil-python
     spec:
       containers:
         - name: anil-python
