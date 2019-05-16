@@ -1,18 +1,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: python
-  namespace: test
+  name: anil-python-workload
+  namespace: anil-test
+  labels:
+    app: anil-python
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
-          app: python
+          app: anil-python
     spec:
       containers:
-        - name: python-app
-          image: gcr.io/searce-playground/anil-python-test:COMMIT_SHA
+        - name: anil-python
+          image: gcr.io/GOOGLE_CLOUD_PROJECT/anil-python-test:COMMIT_SHA
           resources:
             requests:
               cpu: 100m
@@ -27,16 +29,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: anil-python-svc
+  namespace: anil-test
   labels:
-    app: python
-  name: python
-  namespace: test
+    app: anil-python
 spec:
   ports:
   - protocol: TCP
-    port: 5000
+    port: 80
     targetPort: 5000
   selector:
-    app: python
+    app: anil-python
   type: LoadBalancer
 
