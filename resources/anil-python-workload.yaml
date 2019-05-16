@@ -14,15 +14,7 @@ spec:
     spec:
       containers:
         - name: anil-python
-          image: gcr.io/searce-playground/anil-python-test:COMMIT_SHA
-          resources:
-            requests:
-              cpu: 100m
-              memory: 200Mi
-            limits:
-              cpu: 200m
-              memory: 300Mi
+          image: gcr.io/searce-playground/anil-python-test@sha256:bbc2a8484bd860d012422bd9cc46c1f10771b5b2e9e760c0446e9114f4b70def
           ports:
           - name: python-port
             containerPort: 5000
-
