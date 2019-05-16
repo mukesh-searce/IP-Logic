@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: anil-python
-          image: gcr.io/searce-playground/anil-python-test@sha256:COMMIT_SHA
+          image: gcr.io/searce-playground/anil-python-test:latest
           ports:
           - name: python-port
             containerPort: 5000
