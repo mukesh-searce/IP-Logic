@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: python
+  namespace: test
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+          app: python
+    spec:
+      containers:
+        - name: python-app
+          image: gcr.io/searce-playground/anil-python-test:COMMIT_SHA
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              cpu: 200m
+              memory: 300Mi
+          ports:
+          - name: python-port
+            containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: python
+  name: python
+  namespace: test
+spec:
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: python
+  type: LoadBalancer
+

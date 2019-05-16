@@ -1,0 +1,41 @@
+# Clone the git repo.
+
+steps:
+- name: 'gcr.io/cloud-builders/git'
+  id: 'Clone'
+  args: ['clone', 'https://github.com/swapsstyle/IP-Logic.git']
+
+# This step builds the container image.
+
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'gcr.io/searce-playground/anil-python-test:${SHORT_SHA}', '.']
+
+# This step pushes the image to Container Registry
+# The PROJECT_ID and SHORT_SHA variables are automatically
+# replaced by Cloud Build.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args:
+  - 'push'
+  - 'gcr.io/$PROJECT_ID/anil-python-test:$SHORT_SHA'
+
+# This step generates the new manifest
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Generate manifest
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" IP-Logic/deployment.yaml | \
+     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > IP-Logic/deployment.yaml
+
+
+# This step deploys the new version of our container image
+# in the Kubernetes Engine cluster.
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Deploy
+  args: ['apply' , -f' , 'IP-Logic/deployment.yaml', '.']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=northamerica-northeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=harshal-test-cluster'
+
