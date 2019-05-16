@@ -31,7 +31,8 @@ steps:
   - '-c'
   - |
      sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" resources/anil-python-workload.yaml | \
-     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > resources/anil-python-workload.yaml
+     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > resources/anil-python-workload.yaml | \
+     cat COMMIT_SHA
 
 
 # This step deploys the new version of our container image
